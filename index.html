@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캐릭터 타임라인</title>
+
+  <!-- 구글 폰트 preconnect (성능 최적화) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- 글꼴 관련 항목 (구글 폰트, D2Coding, 펴진고딕 등) -->
+  <link rel="stylesheet" href="./font.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="./script.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-actions">
+      <button class="save-btn" id="saveBtn" onclick="manualSave()">💾 현재 상태 저장</button>
+      <button class="capture-btn" id="captureBtn" onclick="captureTimeline()">📸 이미지로 저장</button>
+
+      <div class="export-row">
+        <button class="export-btn" onclick="exportJSON()">설정(json) 내보내기</button>
+        <button class="export-btn" onclick="triggerImportJSON()">설정(json) 불러오기</button>
+      </div>
+      <div class="export-row">
+        <button class="export-btn" onclick="exportCSV()">내용(csv) 내보내기</button>
+        <button class="export-btn" onclick="triggerImportCSV()">내용(csv) 불러오기</button>
+      </div>
+      <input type="file" id="importJSONInput" accept=".json,application/json" style="display:none;">
+      <input type="file" id="importCSVInput" accept=".csv,text/csv" style="display:none;">
+
+      <button class="reset-btn" id="resetBtn" onclick="requestReset()">🗑️ 초기화</button>
+    </div>
+
+    <div class="sidebar-body">
+      <nav class="sidebar-tabs">
+        <button class="tab-btn active" data-tab="font" onclick="switchTab('font')">글꼴</button>
+        <button class="tab-btn" data-tab="profile" onclick="switchTab('profile')">프로필</button>
+        <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">타임라인</button>
+      </nav>
+
+      <div class="sidebar-panels">
+
+        <section class="tab-panel active" id="panel-font">
+          <h2>전체</h2>
+          <select class="shape-select" id="globalFontSelect">
+            <option value="'PyeojinGothic', 'Pretendard', 'Noto Sans KR', sans-serif"
+              style="font-family:'PyeojinGothic','Pretendard','Noto Sans KR',sans-serif;">Sans-serif</option>
+            <option value="'Noto Serif KR', serif" style="font-family:'Noto Serif KR',serif;">Serif</option>
+            <option value="'JetBrains Mono', 'Fira Code', 'D2Coding', monospace"
+              style="font-family:'JetBrains Mono','Fira Code','D2Coding',monospace;">Monospace</option>
+          </select>
+
+          <h2>프로필 이름</h2>
+          <select class="shape-select" id="nameFontSelect">
+            <option value="'PyeojinGothic', 'Pretendard', 'Noto Sans KR', sans-serif"
+              style="font-family:'PyeojinGothic','Pretendard','Noto Sans KR',sans-serif;">Sans-serif</option>
+            <option value="'Noto Serif KR', serif" style="font-family:'Noto Serif KR',serif;">Serif</option>
+            <option value="'Arvo', 'Hahmlet', serif" style="font-family:'Arvo','Hahmlet',serif;" selected>Slab-serif-
+            </option>
+            <option value="'UnifrakturMaguntia', cursive" style="font-family:'UnifrakturMaguntia',cursive;">Blackletter
+            </option>
+          </select>
+
+          <h2>타임라인 날짜</h2>
+          <select class="shape-select" id="dateFontSelect">
+            <option value="'PyeojinGothic', 'Pretendard', 'Noto Sans KR', sans-serif"
+              style="font-family:'PyeojinGothic','Pretendard','Noto Sans KR',sans-serif;">Sans-serif</option>
+            <option value="'Noto Serif KR', serif" style="font-family:'Noto Serif KR',serif;">Serif</option>
+            <option value="'JetBrains Mono', 'Fira Code', 'D2Coding', monospace"
+              style="font-family:'JetBrains Mono','Fira Code','D2Coding',monospace;" selected>Monospace</option>
+          </select>
+        </section>
+
+        <section class="tab-panel" id="panel-profile">
+          <h2>색상</h2>
+          <div class="color-row">
+            <span class="label">캐릭터 A</span>
+            <input type="color" id="colorA" value="#2b6e5e">
+            <input type="text" id="colorAHex" value="#2b6e5e">
+          </div>
+          <div class="color-row">
+            <span class="label">캐릭터 B</span>
+            <input type="color" id="colorB" value="#a8482b">
+            <input type="text" id="colorBHex" value="#a8482b">
+          </div>
+
+          <h2>표시 항목</h2>
+          <label class="check-row"><input type="checkbox" id="showPhoto" checked> 사진</label>
+          <label class="check-row"><input type="checkbox" id="showName" checked> 이름</label>
+          <label class="check-row"><input type="checkbox" id="showStats" checked> 키 · 몸무게</label>
+          <label class="check-row"><input type="checkbox" id="showAgeBday" checked> 나이 / 생일</label>
+          <label class="check-row"><input type="checkbox" id="showBirthInfo" checked> 별자리·탄생석·탄생화·탄생목</label>
+          <label class="check-row"><input type="checkbox" id="showKeywords" checked> 키워드</label>
+
+          <h2>키워드 추가</h2>
+          <button class="add-btn a" onclick="addKeyword('a')"><span class="dot-icon"></span> 캐릭터 A 키워드 추가</button>
+          <button class="add-btn b" onclick="addKeyword('b')"><span class="dot-icon"></span> 캐릭터 B 키워드 추가</button>
+        </section>
+
+        <section class="tab-panel" id="panel-timeline">
+          <h2>줄 모양</h2>
+          <select class="shape-select" id="lineStyleSelect">
+            <option value="solid">실선 ──────</option>
+            <option value="dotted">점선 ······</option>
+            <option value="dashed">파선 – – – –</option>
+            <option value="longdash">긴파선 ── ── ──</option>
+            <option value="dashdot">1점 쇄선 –·–·–·</option>
+            <option value="dashdotdot">2점 쇄선 –··–··–</option>
+          </select>
+
+          <h2>노드 모양</h2>
+          <select class="shape-select" id="shapeSelect">
+            <option value="circle">● 원형</option>
+            <option value="square">■ 모서리가 둥근 사각형</option>
+            <option value="pentagon">⬟ 모서리가 둥근 오각형</option>
+            <option value="hexagon">⬢ 모서리가 둥근 육각형</option>
+            <option value="star">★ 별</option>
+            <option value="heart">♥ 하트</option>
+          </select>
+
+          <h2>노드 추가</h2>
+          <button class="add-btn a" onclick="addEvent('a')"><span class="dot-icon"></span> 캐릭터 A</button>
+          <button class="add-btn b" onclick="addEvent('b')"><span class="dot-icon"></span> 캐릭터 B</button>
+          <button class="add-btn both" onclick="addEvent('both')"><span class="dot-icon"></span> 캐릭터 A + B</button>
+          <button class="add-btn year" onclick="addYearNode()"><span class="dot-icon"></span> 연도 구분선</button>
+          <button class="add-btn photo" onclick="addPhotoNode()"><span class="dot-icon"></span> 사진</button>
+        </section>
+
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="wrap">
+
+      <div class="profiles" id="profiles"></div>
+
+      <div class="timeline" id="timeline">
+        <div class="thread"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="resetModalOverlay">
+    <div class="modal-box">
+      <p class="modal-title">정말 초기화하시겠습니까?</p>
+      <p class="modal-desc">모든 노드, 프로필, 색상, 글꼴 등 설정이 처음 상태로 되돌아가며 되돌릴 수 없습니다.</p>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" onclick="cancelReset()">아니오</button>
+        <button class="modal-btn confirm" onclick="confirmReset()">예</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

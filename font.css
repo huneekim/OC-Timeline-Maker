@@ -1,0 +1,27 @@
+/* ===== 구글 폰트 ===== */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Fira+Code:wght@300..700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@400;600;700&family=Noto+Serif+KR:wght@400;700&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Hahmlet:wght@400;600;700&family=Monsieur+La+Doulaise&family=UnifrakturMaguntia&display=swap');
+
+/* ===== D2Coding (네이버 D2 코딩 폰트, CDN) ===== */
+@import url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css');
+
+/* ===== 펴진고딕 (눈누, https://noonnu.cc/font_page/1586) ===== */
+@font-face {
+    font-family: 'PyeojinGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2504-1@1.0/PyeojinGothic-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PyeojinGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2504-1@1.0/PyeojinGothic-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PyeojinGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2504-1@1.0/PyeojinGothic-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
