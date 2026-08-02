@@ -193,10 +193,10 @@ function buildStateObject() {
   return {
     globalFont: document.body.style.fontFamily || globalFontSelect.value,
     nameFont:
-      getComputedStyle(root).getPropertyValue("--name-font").trim() ||
+      getComputedStyle(root).getPropertyValue("--slab-serif").trim() ||
       nameFontSelect.value,
     dateFont:
-      getComputedStyle(root).getPropertyValue("--date-font").trim() ||
+      getComputedStyle(root).getPropertyValue("--monospace").trim() ||
       dateFontSelect.value,
     colorA: getComputedStyle(root).getPropertyValue("--a-color").trim(),
     colorB: getComputedStyle(root).getPropertyValue("--b-color").trim(),
@@ -412,7 +412,7 @@ function renderEventElement(ev, idx) {
            🖼️
            <input type="file" accept="image/*" data-index="${idx}" data-side="B" class="content-photo-input">
          </label>
-       </div>F`
+       </div>`
       : `<div class="content-b empty-side">-</div>`;
 
   wrap.innerHTML = `
@@ -651,12 +651,12 @@ globalFontSelect.addEventListener("change", function (e) {
 });
 
 nameFontSelect.addEventListener("change", function (e) {
-  root.style.setProperty("--name-font", e.target.value);
+  root.style.setProperty("--slab-serif", e.target.value);
   saveState();
 });
 
 dateFontSelect.addEventListener("change", function (e) {
-  root.style.setProperty("--date-font", e.target.value);
+  root.style.setProperty("--monospace", e.target.value);
   saveState();
 });
 
@@ -1056,11 +1056,11 @@ function applyState(state) {
     if (globalFontSelect) globalFontSelect.value = state.globalFont;
   }
   if (state.nameFont) {
-    root.style.setProperty("--name-font", state.nameFont);
+    root.style.setProperty("--slab-serif", state.nameFont);
     if (nameFontSelect) nameFontSelect.value = state.nameFont;
   }
   if (state.dateFont) {
-    root.style.setProperty("--date-font", state.dateFont);
+    root.style.setProperty("--monospace", state.dateFont);
     if (dateFontSelect) dateFontSelect.value = state.dateFont;
   }
   if (state.colorA) {
@@ -1108,8 +1108,8 @@ function resetAll() {
 
   document.body.style.fontFamily = DEFAULT_GLOBAL_FONT;
   globalFontSelect.value = DEFAULT_GLOBAL_FONT;
-  root.style.setProperty("--name-font", DEFAULT_NAME_FONT);
-  root.style.setProperty("--date-font", DEFAULT_DATE_FONT);
+  root.style.setProperty("--slab-serif", DEFAULT_NAME_FONT);
+  root.style.setProperty("--monospace", DEFAULT_DATE_FONT);
   nameFontSelect.value = DEFAULT_NAME_FONT;
   dateFontSelect.value = DEFAULT_DATE_FONT;
 
