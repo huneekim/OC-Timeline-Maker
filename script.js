@@ -121,15 +121,15 @@ const SHAPES = [
 const LINE_PATTERNS = {
   solid: "linear-gradient(var(--line), var(--line))",
   dotted:
-    "repeating-linear-gradient(to bottom, var(--line) 0 2px, transparent 2px 4.5px)",
+    "repeating-linear-gradient(to bottom, var(--line) 0 .125rem, transparent .125rem .2813rem)",
   dashed:
-    "repeating-linear-gradient(to bottom, var(--line) 0 8px, transparent 8px 11px)",
+    "repeating-linear-gradient(to bottom, var(--line) 0 .5rem, transparent .5rem .6875rem)",
   longdash:
-    "repeating-linear-gradient(to bottom, var(--line) 0 18px, transparent 18px 22px)",
+    "repeating-linear-gradient(to bottom, var(--line) 0 1.125rem, transparent 1.125rem 1.375rem)",
   dashdot:
-    "repeating-linear-gradient(to bottom, var(--line) 0 14px, transparent 14px 20px, var(--line) 20px 22px, transparent 22px 28px)",
+    "repeating-linear-gradient(to bottom, var(--line) 0 .875rem, transparent .875rem 1.25rem, var(--line) 1.25rem 1.375rem, transparent 1.375rem 1.75rem)",
   dashdotdot:
-    "repeating-linear-gradient(to bottom, var(--line) 0 14px, transparent 14px 20px, var(--line) 20px 22px, transparent 22px 28px, var(--line) 28px 30px, transparent 30px 36px)",
+    "repeating-linear-gradient(to bottom, var(--line) 0 .875rem, transparent .875rem 1.25rem, var(--line) 1.25rem 1.375rem, transparent 1.375rem 1.75rem, var(--line) 1.75rem 1.875rem, transparent 1.875rem 2.25rem)",
 };
 
 // 전역 상태 변수
@@ -566,14 +566,14 @@ function renderProfileCard(side) {
   const statsBlock = visibility.stats
     ? `
       <div class="stat-line">
-        <span contenteditable="true" data-placeholder="키" data-side="${side}" data-field="height">${p.height}</span><span class="stat-sep">/</span><span contenteditable="true" data-placeholder="몸무게" data-side="${side}" data-field="weight">${p.weight}</span>
+        <span contenteditable="true" data-placeholder="키" data-side="${side}" data-field="height">${p.height}</span><span class="stat-sep">·</span><span contenteditable="true" data-placeholder="몸무게" data-side="${side}" data-field="weight">${p.weight}</span>
       </div>`
     : "";
 
   const agebdayBlock = visibility.agebday
     ? `
       <div class="agebday-line">
-        <span contenteditable="true" data-placeholder="나이" data-side="${side}" data-field="age">${p.age}</span><span class="stat-sep">/</span><span contenteditable="true" data-placeholder="MM.DD" data-side="${side}" data-field="birthday">${p.birthday}</span>
+        <span contenteditable="true" data-placeholder="나이" data-side="${side}" data-field="age">${p.age}</span><span class="stat-sep">·</span><span contenteditable="true" data-placeholder="MM.DD" data-side="${side}" data-field="birthday">${p.birthday}</span>
       </div>`
     : "";
 
