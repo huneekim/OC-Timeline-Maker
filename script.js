@@ -1120,7 +1120,7 @@ const App = {
         Storage.save();
         const btn = document.getElementById("saveBtn");
         const original = btn.textContent;
-        btn.textContent = "✔ 저장됨";
+        btn.textContent = "저장됨";
         setTimeout(
           () => (btn.textContent = original),
           1200,
